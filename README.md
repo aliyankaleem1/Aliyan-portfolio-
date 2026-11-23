@@ -1,5 +1,5 @@
 # 🌌 Aliyan — Creative Portfolio & UI/UX Showcase
-> **🔗 Live Website Demo**: [https://aliyan-ui-ux-coder.github.io/Aliyan-portfolio-/](https://aliyan-ui-ux-coder.github.io/Aliyan-portfolio-/)  
+> **🔗 Live Website Demo**: [https://aliyankaleem1.github.io/Aliyan-portfolio-/](https://aliyankaleem1.github.io/Aliyan-portfolio-/)  
 > **💬 Direct WhatsApp**: [+92 314 3215619](https://wa.me/923143215619)  
 > **🤖 Dedicated AI Agent**: Interactive Aliyan AI Assistant trained to answer questions about projects, stack, and design process.
 
