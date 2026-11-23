@@ -9,25 +9,28 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@800;900&family=Italiana&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
 
   <style>
     /* ==========================================================================
        Design System & Variables (Awwwards Creative Portfolio Palette)
        ========================================================================== */
     :root {
-      --bg-dark: #08080c;
-      --bg-surface: #0e0f17;
+      --bg-dark: #090305;
+      --bg-surface: #12131b;
       --bg-crimson: #990024;
-      --crimson-glow: #e11d48;
-      --crimson-bright: #ff2a55;
+      --crimson-glow: #ff4b0a;
+      --crimson-bright: #ff4b0a;
+      --accent-orange: #ff6e14;
+      --accent-amber: #f03c0a;
       --accent-blue: #3b82f6;
       --accent-cyan: #00f2fe;
-      --text-white: #ffffff;
+      --text-white: #efe9d8;
       --text-muted: #94a3b8;
       --text-dim: #64748b;
       
       --font-display: 'Syne', sans-serif;
+      --font-wordmark: 'Archivo', 'Syne', sans-serif;
       --font-serif: 'Italiana', serif;
       --font-sans: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
       
@@ -58,59 +61,102 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Ambient Canvas & Atmosphere Background */
-    #ambient-particles-canvas {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
+    /* ==========================================================================
+       Living Aurora Background (m-raza luxury style)
+       ========================================================================== */
+    .sb-aurora-wrap {
       pointer-events: none;
       z-index: 0;
+      opacity: 0.88;
+      filter: blur(52px);
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+    }
+    .sb-aurora-blob {
+      will-change: transform, opacity;
+      border-radius: 50%;
+      position: absolute;
+      transform: translate(0, 0);
+    }
+    .sb-aurora-1 {
+      background: radial-gradient(circle, #ff4b0a88 0%, #dc1e0040 55%, transparent 75%);
+      width: 90vw;
+      max-width: 950px;
+      height: 90vw;
+      max-height: 950px;
+      animation: 18s cubic-bezier(.4, 0, .2, 1) infinite alternate auroraFlow1;
+      top: -15%;
+      left: -10%;
+    }
+    .sb-aurora-2 {
+      background: radial-gradient(circle, #ff6e1477 0%, #b4140a44 50%, transparent 75%);
+      width: 95vw;
+      max-width: 1050px;
+      height: 95vw;
+      max-height: 1050px;
+      animation: 22s cubic-bezier(.4, 0, .2, 1) infinite alternate auroraFlow2;
+      bottom: -20%;
+      right: -15%;
+    }
+    .sb-aurora-3 {
+      background: radial-gradient(circle, #f03c0a70 0%, #820a1435 60%, transparent 80%);
+      width: 75vw;
+      max-width: 850px;
+      height: 75vw;
+      max-height: 850px;
+      animation: 26s cubic-bezier(.4, 0, .2, 1) infinite alternate auroraFlow3;
+      top: 30%;
+      left: 20%;
+    }
+    @keyframes auroraFlow1 {
+      0% { transform: translate(0, 0) rotate(0) scale(1); }
+      50% { transform: translate(8vw, 12vh) rotate(45deg) scale(1.15); }
+      100% { transform: translate(-5vw, 6vh) rotate(90deg) scale(0.95); }
+    }
+    @keyframes auroraFlow2 {
+      0% { transform: translate(0, 0) rotate(0) scale(1); }
+      50% { transform: translate(-10vw, -8vh) rotate(-40deg) scale(1.18); }
+      100% { transform: translate(6vw, -14vh) rotate(-80deg) scale(0.92); }
+    }
+    @keyframes auroraFlow3 {
+      0% { transform: translate(0, 0) scale(0.95); }
+      50% { transform: translate(-6vw, 10vh) scale(1.22); }
+      100% { transform: translate(10vw, -6vh) scale(1.05); }
+    }
+    .sb-wash {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      mix-blend-mode: screen !important;
+      background: radial-gradient(circle, rgba(255, 85, 0, 0.28) 0%, rgba(200, 35, 0, 0.12) 50%, transparent 80%) !important;
     }
     .ambient-cyber-grid {
       position: fixed;
       inset: 0;
       background-size: 55px 55px;
       background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
       pointer-events: none;
-      z-index: 0;
-      mask-image: radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.85) 0%, transparent 80%);
-      -webkit-mask-image: radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.85) 0%, transparent 80%);
+      z-index: 1;
+      animation: gridShift 24s linear infinite;
+      mask-image: radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.92) 0%, transparent 85%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.92) 0%, transparent 85%);
     }
-    .ambient-orb {
+    @keyframes gridShift {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(55px, 55px); }
+    }
+    #ambient-particles-canvas {
       position: fixed;
-      border-radius: 50%;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
       pointer-events: none;
-      z-index: 0;
-      filter: blur(80px);
-    }
-    .ambient-orb.orb-1 {
-      top: 15%;
-      right: 12%;
-      width: clamp(280px, 40vw, 550px);
-      height: clamp(280px, 40vw, 550px);
-      background: radial-gradient(circle, rgba(225, 29, 72, 0.22) 0%, rgba(136, 0, 26, 0.08) 50%, transparent 70%);
-      animation: orbFloat1 18s ease-in-out infinite alternate;
-    }
-    .ambient-orb.orb-2 {
-      bottom: 15%;
-      left: 8%;
-      width: clamp(260px, 35vw, 500px);
-      height: clamp(260px, 35vw, 500px);
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.16) 0%, rgba(138, 43, 226, 0.06) 50%, transparent 70%);
-      animation: orbFloat2 22s ease-in-out infinite alternate;
-    }
-    @keyframes orbFloat1 {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(-40px, 50px) scale(1.12); }
-      100% { transform: translate(30px, -40px) scale(0.95); }
-    }
-    @keyframes orbFloat2 {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(50px, -40px) scale(1.15); }
-      100% { transform: translate(-30px, 30px) scale(0.9); }
+      z-index: 1;
     }
 
     /* Custom Cursor */
@@ -338,21 +384,28 @@
       width: 100%;
       height: 100%;
       border-radius: 28px;
-      background: linear-gradient(180deg, rgba(225, 29, 72, 0.25) 0%, rgba(15, 15, 25, 0.9) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 50px rgba(225, 29, 72, 0.35);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(18, 19, 27, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 25px 65px -10px rgba(0, 0, 0, 0.8), 0 0 45px -10px rgba(255, 75, 10, 0.35);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       position: relative;
       overflow: hidden;
       display: flex;
       align-items: flex-end;
       justify-content: center;
+      transition: all 0.4s var(--ease-out-expo);
+    }
+    .hero-portrait-card:hover {
+      border-color: rgba(255, 110, 20, 0.55);
+      box-shadow: 0 35px 80px -15px rgba(0, 0, 0, 0.9), 0 0 55px -5px rgba(255, 75, 10, 0.45);
     }
 
     /* Artistic silhouette vector & Hero Photo */
     .portrait-avatar-art {
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at 50% 35%, #ff2a55 0%, #4c0519 55%, #08080c 100%);
+      background: radial-gradient(circle at 50% 35%, #ff4b0a 0%, #820a14 55%, #090305 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -644,49 +697,56 @@
     }
 
     .floating-quote-box {
-      background: rgba(14, 15, 23, 0.7);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%), rgba(18, 19, 27, 0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 20px;
-      padding: 2.2rem;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 30px rgba(225, 29, 72, 0.2);
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 2.4rem;
+      box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.65), 0 0 30px -10px rgba(255, 75, 10, 0.2);
+      transition: transform 0.4s var(--ease-out-expo), border-color 0.4s, box-shadow 0.4s;
+    }
+    .floating-quote-box:hover {
+      border-color: rgba(255, 110, 20, 0.45);
+      transform: translateY(-6px);
+      box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.85), 0 0 40px -5px rgba(255, 75, 10, 0.35);
     }
     .floating-quote-box h4 {
       font-family: var(--font-display);
-      font-size: 1.4rem;
+      font-size: 1.45rem;
       margin-bottom: 0.8rem;
       line-height: 1.3;
+      color: #efe9d8;
     }
     .floating-quote-box p {
       color: var(--text-muted);
       font-size: 0.95rem;
       line-height: 1.6;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.6rem;
     }
     .floating-quote-box .quote-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.6rem 1.2rem;
+      padding: 0.7rem 1.4rem;
       border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #efe9d8;
       font-size: 0.82rem;
       font-weight: 700;
       text-decoration: none;
       transition: var(--transition);
     }
     .floating-quote-box .quote-btn:hover {
-      background: var(--crimson-bright);
-      border-color: var(--crimson-bright);
-      box-shadow: 0 0 20px rgba(255, 42, 85, 0.5);
+      background: #ff4b0a;
+      border-color: #ff4b0a;
+      color: #ffffff;
+      box-shadow: 0 0 25px rgba(255, 75, 10, 0.5);
     }
 
     /* ==========================================================================
-       Section: Featured Works (Video 00:12 - 00:13)
+       Section: Featured Works (m-raza luxury glass cards)
        ========================================================================== */
     .featured-section {
       padding: 7rem 0;
@@ -701,6 +761,7 @@
       font-size: clamp(2.5rem, 6vw, 4.2rem);
       font-weight: 900;
       letter-spacing: -0.02em;
+      color: #efe9d8;
     }
 
     .works-grid {
@@ -710,32 +771,46 @@
     }
 
     .work-card {
-      background: rgba(14, 15, 23, 0.65);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 24px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%), rgba(18, 19, 27, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 20px;
       overflow: hidden;
-      backdrop-filter: blur(16px);
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.65), 0 0 30px -10px rgba(255, 75, 10, 0.2);
+      transition: transform 0.4s var(--ease-out-expo), border-color 0.4s, box-shadow 0.4s;
       cursor: pointer;
       text-decoration: none;
       color: inherit;
       display: flex;
       flex-direction: column;
+      position: relative;
+    }
+    .work-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+      opacity: 0.6;
     }
     .work-card:hover {
-      border-color: var(--crimson-bright);
-      transform: translateY(-8px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 35px rgba(225, 29, 72, 0.25);
+      border-color: rgba(255, 110, 20, 0.5);
+      transform: translateY(-8px) scale(1.018);
+      box-shadow: 0 30px 65px -12px rgba(0, 0, 0, 0.85), 0 0 45px -5px rgba(255, 75, 10, 0.38);
     }
 
     .work-thumb {
-      height: 240px;
+      height: 250px;
       position: relative;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #090a10;
+      background: #090305;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
     .work-thumb-visual {
       width: 100%;
@@ -743,50 +818,57 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 4rem;
-      transition: transform 0.6s ease;
+      font-size: 4.5rem;
+      transition: transform 0.7s var(--ease-out-expo), filter 0.6s;
     }
     .work-card:hover .work-thumb-visual {
       transform: scale(1.12);
+      filter: saturate(1.15);
     }
 
     .work-badge {
       position: absolute;
-      top: 14px;
-      left: 14px;
-      background: rgba(8, 8, 12, 0.8);
-      backdrop-filter: blur(8px);
+      top: 16px;
+      left: 16px;
+      background: rgba(9, 3, 5, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 0.3rem 0.7rem;
+      padding: 0.35rem 0.85rem;
       border-radius: 9999px;
       font-size: 0.72rem;
       font-weight: 700;
-      color: var(--crimson-bright);
+      letter-spacing: 0.1em;
+      color: #efe9d8;
+      z-index: 2;
     }
 
     .work-body {
-      padding: 1.8rem;
+      padding: 2rem 2.2rem;
       display: flex;
       flex-direction: column;
       flex: 1;
     }
     .work-body h3 {
       font-family: var(--font-display);
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       font-weight: 800;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+      color: #efe9d8;
     }
     .work-sub {
-      color: var(--crimson-bright);
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 0.8rem;
+      color: #ff6e14;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.7rem;
     }
     .work-body p {
       color: var(--text-muted);
-      font-size: 0.9rem;
-      line-height: 1.5;
-      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.6rem;
       flex: 1;
     }
     .work-techs {
@@ -796,21 +878,27 @@
     }
     .work-techs span {
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 0.2rem 0.6rem;
-      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
       font-size: 0.75rem;
-      color: var(--text-dim);
+      color: var(--text-muted);
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .work-card:hover .work-techs span {
+      border-color: rgba(255, 110, 20, 0.3);
+      color: #efe9d8;
     }
 
     /* ==========================================================================
-       Section: Impact & Huge Name Footer (Video 00:14 - 00:16)
+       Section: Impact & Kinetic Giant Wordmark
        ========================================================================== */
     .impact-section {
       position: relative;
       padding: 9rem 0 0 0;
       overflow: hidden;
-      background: linear-gradient(180deg, var(--bg-dark) 0%, #35000c 50%, #88001a 100%);
+      background: linear-gradient(180deg, transparent 0%, rgba(26, 5, 11, 0.75) 45%, rgba(74, 8, 21, 0.95) 100%);
       text-align: center;
     }
 
@@ -822,10 +910,11 @@
       line-height: 1.05;
       margin-bottom: 1rem;
       text-transform: uppercase;
+      color: #efe9d8;
     }
 
     .impact-sub {
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(239, 233, 216, 0.85);
       font-size: clamp(1rem, 2vw, 1.25rem);
       max-width: 600px;
       margin: 0 auto 2.5rem auto;
@@ -843,9 +932,9 @@
     }
 
     .btn-impact-main {
-      padding: 1rem 2.2rem;
-      background: #ffffff;
-      color: #08080c;
+      padding: 1rem 2.4rem;
+      background: #efe9d8;
+      color: #090305;
       border-radius: 9999px;
       font-weight: 800;
       font-size: 1.05rem;
@@ -855,26 +944,26 @@
     }
     .btn-impact-main:hover {
       transform: scale(1.05);
-      background: #08080c;
-      color: #fff;
-      box-shadow: 0 10px 40px rgba(255, 42, 85, 0.5);
+      background: #ff4b0a;
+      color: #ffffff;
+      box-shadow: 0 10px 40px rgba(255, 75, 10, 0.55);
     }
 
     .btn-impact-secondary {
-      padding: 1rem 2rem;
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: #fff;
+      padding: 1rem 2.2rem;
+      background: rgba(9, 3, 5, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #efe9d8;
       border-radius: 9999px;
       font-weight: 700;
       font-size: 1rem;
       text-decoration: none;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
       transition: var(--transition);
     }
     .btn-impact-secondary:hover {
       background: rgba(255, 255, 255, 0.15);
-      border-color: #fff;
+      border-color: #efe9d8;
     }
 
     .giant-name-banner {
@@ -886,22 +975,29 @@
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      padding: 0 1rem;
+      padding: 5rem 1rem 0;
+      margin-top: 3rem;
+      perspective: 1000px;
     }
     .giant-name-text {
-      font-family: var(--font-display);
-      font-size: clamp(3.2rem, 15vw, 14.5rem);
+      font-family: var(--font-wordmark);
+      font-size: clamp(6rem, 28vw, 28rem);
       font-weight: 900;
-      color: #ffffff;
-      line-height: 0.85;
-      letter-spacing: -0.03em;
+      color: #efe9d8;
+      line-height: 0.8;
+      letter-spacing: -0.06em;
       text-transform: uppercase;
-      opacity: 0.96;
-      margin-bottom: -0.04em;
+      margin-bottom: -0.06em;
       text-align: center;
       white-space: nowrap;
       max-width: 100%;
-      filter: drop-shadow(0 -15px 35px rgba(0, 0, 0, 0.5));
+      transform-origin: center bottom;
+      will-change: transform, letter-spacing;
+      transition: transform 0.08s linear, letter-spacing 0.08s linear;
+      background: linear-gradient(180deg, #ffffff 15%, #ff4b0a 70%, #990024 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 6px 50px rgba(255, 75, 10, 0.45));
     }
 
     .outro-strip {
@@ -1540,12 +1636,13 @@
         font-size: 0.92rem;
       }
       .giant-name-banner {
-        padding: 0 0.5rem;
+        padding: 3rem 0.5rem 0;
+        margin-top: 2rem;
       }
       .giant-name-text {
-        font-size: clamp(2.4rem, 15vw, 5rem);
-        letter-spacing: -0.02em;
-        line-height: 0.9;
+        font-size: clamp(4.5rem, 24vw, 14rem);
+        letter-spacing: -0.05em;
+        line-height: 0.82;
       }
 
       .outro-strip {
@@ -1630,21 +1727,25 @@
         justify-content: center;
         border-radius: 50%;
       }
-        border-radius: 50%;
-      }
       .giant-name-text {
-        font-size: clamp(2rem, 14vw, 3.2rem);
+        font-size: clamp(3.8rem, 22vw, 8rem);
+        letter-spacing: -0.05em;
+        line-height: 0.82;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Ambient Animated Background Particles & Atmosphere -->
-  <canvas id="ambient-particles-canvas"></canvas>
-  <div class="ambient-cyber-grid"></div>
-  <div class="ambient-orb orb-1"></div>
-  <div class="ambient-orb orb-2"></div>
+  <!-- Living Aurora Background Animation (m-raza luxury style) -->
+  <div class="sb-aurora-wrap" aria-hidden="true">
+    <div class="sb-aurora-blob sb-aurora-1"></div>
+    <div class="sb-aurora-blob sb-aurora-2"></div>
+    <div class="sb-aurora-blob sb-aurora-3"></div>
+    <div class="sb-wash"></div>
+  </div>
+  <div class="ambient-cyber-grid" aria-hidden="true"></div>
+  <canvas id="ambient-particles-canvas" aria-hidden="true"></canvas>
 
   <!-- Custom Cursor -->
   <div class="custom-cursor"></div>
@@ -1865,8 +1966,8 @@
         </div>
       </div>
 
-      <div class="giant-name-banner">
-        <div class="giant-name-text">ALIYAN</div>
+      <div class="giant-name-banner" id="giant-name-banner">
+        <div class="giant-name-text" id="giant-name-text">ALIYAN</div>
       </div>
     </section>
   </main>
@@ -2031,15 +2132,38 @@
         });
       });
 
-      // 3. Header Scroll Glass Effect
+      // 3. Header Scroll Glass Effect & Kinetic Bottom Wordmark Dynamic Scale
       const header = document.querySelector('.site-header');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 40) {
-          header.classList.add('scrolled');
-        } else {
-          header.classList.remove('scrolled');
+      const giantNameText = document.getElementById('giant-name-text');
+      const giantNameBanner = document.getElementById('giant-name-banner');
+
+      function handleScrollEffects() {
+        if (header) {
+          if (window.scrollY > 40) {
+            header.classList.add('scrolled');
+          } else {
+            header.classList.remove('scrolled');
+          }
         }
-      });
+
+        // Kinetic Wordmark Scale on Scroll (m-raza footer-wordmark growth effect)
+        if (giantNameText && giantNameBanner) {
+          const rect = giantNameBanner.getBoundingClientRect();
+          const winHeight = window.innerHeight;
+          const enterDistance = winHeight - rect.top;
+          const totalDistance = winHeight + rect.height * 0.5;
+          const progress = Math.min(Math.max(enterDistance / totalDistance, 0), 1);
+          
+          // Starts huge and expands dynamically on scroll (scale 1.0 up to 1.65x)
+          const scale = 1.0 + (progress * 0.65);
+          const letterSpacing = -0.06 + (progress * 0.02);
+          giantNameText.style.transform = `scale(${scale.toFixed(3)})`;
+          giantNameText.style.letterSpacing = `${letterSpacing.toFixed(3)}em`;
+        }
+      }
+      window.addEventListener('scroll', handleScrollEffects, { passive: true });
+      window.addEventListener('resize', handleScrollEffects);
+      handleScrollEffects();
 
       // 4. Portrait Card 3D Tilt with Mouse
       const portraitWrap = document.getElementById('portrait-stage');
