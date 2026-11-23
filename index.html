@@ -968,6 +968,7 @@
 
     .giant-name-banner {
       width: 100%;
+      max-width: 100vw;
       overflow: hidden;
       position: relative;
       user-select: none;
@@ -975,29 +976,31 @@
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      padding: 5rem 1rem 0;
-      margin-top: 3rem;
+      padding: 3.5rem 1rem 0;
+      margin-top: 2rem;
+      box-sizing: border-box;
       perspective: 1000px;
     }
     .giant-name-text {
       font-family: var(--font-wordmark);
-      font-size: clamp(6rem, 28vw, 28rem);
+      font-size: clamp(2.8rem, 14vw, 11rem);
       font-weight: 900;
       color: #efe9d8;
-      line-height: 0.8;
-      letter-spacing: -0.06em;
+      line-height: 0.85;
+      letter-spacing: -0.04em;
       text-transform: uppercase;
-      margin-bottom: -0.06em;
+      margin-bottom: -0.04em;
       text-align: center;
       white-space: nowrap;
-      max-width: 100%;
+      max-width: 95vw;
+      box-sizing: border-box;
       transform-origin: center bottom;
-      will-change: transform, letter-spacing;
-      transition: transform 0.08s linear, letter-spacing 0.08s linear;
+      will-change: transform;
+      transition: transform 0.1s ease-out;
       background: linear-gradient(180deg, #ffffff 15%, #ff4b0a 70%, #990024 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 6px 50px rgba(255, 75, 10, 0.45));
+      filter: drop-shadow(0 6px 35px rgba(255, 75, 10, 0.4));
     }
 
     .outro-strip {
@@ -1016,17 +1019,102 @@
     }
     .outro-links {
       display: flex;
-      gap: 2rem;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
     }
     .outro-links a {
-      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 1.25rem;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #efe9d8;
       text-decoration: none;
-      font-size: 0.95rem;
+      font-size: 0.86rem;
       font-weight: 600;
-      transition: var(--transition);
+      transition: all 0.3s var(--ease-out-expo);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
     }
     .outro-links a:hover {
-      color: #fff;
+      background: rgba(255, 75, 10, 0.22);
+      border-color: rgba(255, 110, 20, 0.55);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 75, 10, 0.35);
+    }
+
+    /* Floating Bottom Quick-Nav Dock on Scroll Down */
+    .floating-quick-dock {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translate(-50%, 50px);
+      background: rgba(14, 15, 23, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.75), 0 0 25px rgba(255, 75, 10, 0.22);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 6px 10px;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s var(--ease-out-expo), transform 0.35s var(--ease-out-expo);
+    }
+    .floating-quick-dock.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, 0);
+    }
+    .dock-link {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+    .dock-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transition: background-color 0.25s, box-shadow 0.25s;
+    }
+    .dock-link:hover, .dock-link.active {
+      color: #ffffff;
+      background: rgba(255, 75, 10, 0.24);
+      box-shadow: 0 0 15px rgba(255, 75, 10, 0.3);
+    }
+    .dock-link.active .dock-dot {
+      background: #ff4b0a;
+      box-shadow: 0 0 8px #ff4b0a;
+    }
+    @media (max-width: 600px) {
+      .floating-quick-dock {
+        bottom: 16px;
+        padding: 5px 8px;
+        gap: 4px;
+        max-width: 94vw;
+      }
+      .dock-link {
+        font-size: 0.74rem;
+        padding: 5px 10px;
+      }
     }
 
     .fullscreen-nav-drawer {
@@ -1636,13 +1724,14 @@
         font-size: 0.92rem;
       }
       .giant-name-banner {
-        padding: 3rem 0.5rem 0;
-        margin-top: 2rem;
+        padding: 2.5rem 0.5rem 0;
+        margin-top: 1.5rem;
       }
       .giant-name-text {
-        font-size: clamp(4.5rem, 24vw, 14rem);
-        letter-spacing: -0.05em;
-        line-height: 0.82;
+        font-size: clamp(2.4rem, 13.5vw, 5.5rem);
+        letter-spacing: -0.03em;
+        line-height: 0.85;
+        max-width: 95vw;
       }
 
       .outro-strip {
@@ -1728,9 +1817,10 @@
         border-radius: 50%;
       }
       .giant-name-text {
-        font-size: clamp(3.8rem, 22vw, 8rem);
-        letter-spacing: -0.05em;
-        line-height: 0.82;
+        font-size: clamp(2rem, 12.5vw, 3.6rem);
+        letter-spacing: -0.02em;
+        line-height: 0.85;
+        max-width: 95vw;
       }
     }
   </style>
@@ -1979,10 +2069,22 @@
       </div>
 
       <div class="outro-links">
-        <a href="#hero">Home</a>
-        <a href="#roles">Roles</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+        <a href="#hero" class="outro-btn" title="Scroll to Home">
+          <span>Home</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+        </a>
+        <a href="#roles" class="outro-btn" title="Scroll to Roles">
+          <span>Roles</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </a>
+        <a href="#projects" class="outro-btn" title="Scroll to Projects">
+          <span>Projects</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </a>
+        <a href="#contact" class="outro-btn" title="Scroll to Contact">
+          <span>Contact</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </a>
       </div>
 
       <div style="font-size: 0.82rem; color: var(--text-dim);">
@@ -2003,6 +2105,26 @@
       Direct Contact: <a href="https://wa.me/923143215619" target="_blank">+92 314 3215619</a>
     </div>
   </div>
+
+  <!-- Floating Bottom Quick-Nav Dock on Scroll Down -->
+  <nav class="floating-quick-dock" id="floating-quick-dock" aria-label="Quick Navigation">
+    <a href="#hero" class="dock-link active" title="Go to Home">
+      <span class="dock-dot"></span>
+      <span>Home</span>
+    </a>
+    <a href="#roles" class="dock-link" title="Scroll to Roles">
+      <span class="dock-dot"></span>
+      <span>Roles</span>
+    </a>
+    <a href="#projects" class="dock-link" title="Scroll to Projects">
+      <span class="dock-dot"></span>
+      <span>Projects</span>
+    </a>
+    <a href="#contact" class="dock-link" title="Scroll to Contact">
+      <span class="dock-dot"></span>
+      <span>Contact</span>
+    </a>
+  </nav>
 
   <!-- Aliyan AI Assistant Floating Trigger -->
   <button class="floating-ai-trigger" id="ai-agent-trigger" aria-label="Open Aliyan AI Assistant">
@@ -2132,38 +2254,93 @@
         });
       });
 
-      // 3. Header Scroll Glass Effect & Kinetic Bottom Wordmark Dynamic Scale
+      // 3. Header Scroll Glass, Kinetic Bottom Wordmark & Floating Quick Navigation
       const header = document.querySelector('.site-header');
       const giantNameText = document.getElementById('giant-name-text');
       const giantNameBanner = document.getElementById('giant-name-banner');
+      const quickDock = document.getElementById('floating-quick-dock');
+      const dockLinks = document.querySelectorAll('.dock-link');
+      const trackedSections = ['hero', 'roles', 'projects', 'contact']
+        .map((id) => document.getElementById(id))
+        .filter(Boolean);
 
       function handleScrollEffects() {
+        const scrollY = window.scrollY;
+
+        // Header glass blur effect
         if (header) {
-          if (window.scrollY > 40) {
+          if (scrollY > 40) {
             header.classList.add('scrolled');
           } else {
             header.classList.remove('scrolled');
           }
         }
 
-        // Kinetic Wordmark Scale on Scroll (m-raza footer-wordmark growth effect)
+        // Floating quick dock: visible when scrolled down past 260px
+        if (quickDock) {
+          if (scrollY > 260) {
+            quickDock.classList.add('visible');
+          } else {
+            quickDock.classList.remove('visible');
+          }
+
+          // Active indicator highlight as user scrolls down
+          const probePoint = scrollY + 220;
+          trackedSections.forEach((sec) => {
+            if (probePoint >= sec.offsetTop && probePoint < sec.offsetTop + sec.offsetHeight) {
+              dockLinks.forEach((dl) => {
+                if (dl.getAttribute('href') === '#' + sec.id) {
+                  dl.classList.add('active');
+                } else {
+                  dl.classList.remove('active');
+                }
+              });
+            }
+          });
+        }
+
+        // Kinetic Wordmark Scale on Scroll (kept within screen bounds)
         if (giantNameText && giantNameBanner) {
           const rect = giantNameBanner.getBoundingClientRect();
           const winHeight = window.innerHeight;
           const enterDistance = winHeight - rect.top;
-          const totalDistance = winHeight + rect.height * 0.5;
+          const totalDistance = winHeight + rect.height * 0.4;
           const progress = Math.min(Math.max(enterDistance / totalDistance, 0), 1);
           
-          // Starts huge and expands dynamically on scroll (scale 1.0 up to 1.65x)
-          const scale = 1.0 + (progress * 0.65);
-          const letterSpacing = -0.06 + (progress * 0.02);
+          // Smooth, elegant scaling that expands on scroll without ever overflowing screen
+          const scale = 0.96 + (progress * 0.16);
           giantNameText.style.transform = `scale(${scale.toFixed(3)})`;
-          giantNameText.style.letterSpacing = `${letterSpacing.toFixed(3)}em`;
         }
       }
+
       window.addEventListener('scroll', handleScrollEffects, { passive: true });
       window.addEventListener('resize', handleScrollEffects);
       handleScrollEffects();
+
+      // Smooth Animated Scroll Handler for Home, Roles, Projects & Contact Buttons
+      function scrollToTarget(selector) {
+        const target = document.querySelector(selector);
+        if (target) {
+          const navOffset = 65;
+          const targetTop = target.getBoundingClientRect().top + window.pageYOffset - navOffset;
+          window.scrollTo({
+            top: Math.max(0, targetTop),
+            behavior: 'smooth'
+          });
+        }
+      }
+
+      document.querySelectorAll('.outro-links a, .dock-link, .drawer-link').forEach((link) => {
+        link.addEventListener('click', (e) => {
+          const href = link.getAttribute('href');
+          if (href && href.startsWith('#')) {
+            e.preventDefault();
+            scrollToTarget(href);
+            const drawerModal = document.getElementById('fullscreen-drawer');
+            if (drawerModal) drawerModal.classList.remove('open');
+          }
+        });
+      });
 
       // 4. Portrait Card 3D Tilt with Mouse
       const portraitWrap = document.getElementById('portrait-stage');
